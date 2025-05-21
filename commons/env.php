@@ -7,7 +7,7 @@
 
 define('DB_HOST'    , 'localhost');
 define('DB_PORT'    , 3306);
-define('DB_NAME'    , 'base_du_an_1');  // Tên database
+define('DB_NAME'    , 'pro1014.03');  // Tên database
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
