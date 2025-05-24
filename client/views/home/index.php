@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Trang chủ - Cửa hàng điện thoại</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/duan1/assets/css/style.css">
 </head>
 <body>
     <header>
@@ -24,7 +24,7 @@
         <div class="product-list">
             <?php foreach ($products as $product): ?>
                 <div class="product">
-                    <img src="/assets/images/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
+                    <img src="../../../assets/images/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
                     <h3><?php echo $product['name']; ?></h3>
                     <p>Giá: $<?php echo $product['price']; ?></p>
                     <a href="?controller=product&action=detail&id=<?php echo $product['id']; ?>">Xem chi tiết</a>
