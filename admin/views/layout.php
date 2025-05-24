@@ -27,6 +27,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-white <?php echo isset($_GET['controller']) && $_GET['controller'] == 'order' ? 'active' : ''; ?>" href="?controller=order&action=index">
+                        <i class="fas fa-shopping-cart me-2"></i> Quản lý Đơn hàng
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white" href="?controller=user&action=logout">
                         <i class="fas fa-sign-out-alt me-2"></i> Đăng xuất
                     </a>

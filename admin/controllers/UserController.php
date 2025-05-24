@@ -7,40 +7,29 @@ class UserController {
     public function __construct() {
         $database = new Database();
         $this->db = $database->connect();
-        if (!$this->db) {
-            die("Database connection failed.");
-        }
     }
 
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
+            $email = $_POST['email']; // Changed from 'username' to 'email'
             $password = $_POST['password'];
 
-            $query = "SELECT * FROM users WHERE username = :username";
+            $query = "SELECT * FROM users WHERE email = :email AND role = 'admin'"; // Changed 'username' to 'email', added role check
             $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $email);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user) {
-                if (password_verify($password, $user['password'])) {
-                    $_SESSION['user'] = $user;
-                    if ($user['role'] === 'admin') {
-                        header('Location: ?controller=category&action=index');
-                    } else {
-                        header('Location: ../client/?controller=home&action=index');
-                    }
-                    exit();
-                } else {
-                    $error = "Sai mật khẩu!";
-                }
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['user'] = $user;
+                header('Location: ?controller=category&action=index');
+                exit();
             } else {
-                $error = "Sai tên đăng nhập!";
+                $error = "Email hoặc mật khẩu không đúng, hoặc bạn không có quyền truy cập Admin.";
             }
         }
 
-        $viewPath = __DIR__ . '/../views/login.php';
+        $viewPath = __DIR__ . '/../views/user/login.php';
         if (!file_exists($viewPath)) {
             die("Error: Login view file not found at: " . $viewPath);
         }
@@ -48,7 +37,7 @@ class UserController {
     }
 
     public function logout() {
-        session_destroy();
+        unset($_SESSION['user']);
         header('Location: ?controller=user&action=login');
         exit();
     }

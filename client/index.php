@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once '../config/database.php';
 
 $controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';

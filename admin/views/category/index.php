@@ -25,6 +25,11 @@ require_once $layoutPath;
             </div>
         </form>
 
+        <!-- Thông báo lỗi -->
+        <?php if (isset($_GET['error'])): ?>
+            <div class="alert alert-danger"><?php echo htmlspecialchars(urldecode($_GET['error'])); ?></div>
+        <?php endif; ?>
+
         <!-- Thông báo và bảng -->
         <?php if (empty($categories)): ?>
             <div class="alert alert-info">
@@ -49,7 +54,7 @@ require_once $layoutPath;
                                 <td class="text-center"><?php echo $category['created_at']; ?></td>
                                 <td class="text-center">
                                     <a href="?controller=category&action=edit&id=<?php echo $category['id']; ?>" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Sửa</a>
-                                    <a href="?controller=category&action=delete&id=<?php echo $category['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i class="fas fa-trash"></i> Xóa</a>
+                                    <a href="?controller=category&action=delete&id=<?php echo $category['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')"><i class="fas fa-trash"></i> Xóa</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

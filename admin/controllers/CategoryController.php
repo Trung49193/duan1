@@ -35,10 +35,6 @@ class CategoryController {
         $stmt->execute();
         $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Debug: Kiểm tra dữ liệu danh mục
-        echo "Debug (Controller): Number of categories: " . count($categories) . "<br>";
-        echo "Debug (Controller): Categories data: " . print_r($categories, true) . "<br>";
-
         // Tính tổng số danh mục để tạo phân trang
         $totalQuery = $search ? "SELECT COUNT(*) FROM categories WHERE name LIKE :search" : "SELECT COUNT(*) FROM categories";
         $totalStmt = $this->db->prepare($totalQuery);
@@ -102,6 +98,21 @@ class CategoryController {
 
     public function delete() {
         $id = $_GET['id'];
+
+        // Kiểm tra xem có sản phẩm nào thuộc danh mục này không
+        $checkQuery = "SELECT COUNT(*) FROM products WHERE category_id = :id";
+        $checkStmt = $this->db->prepare($checkQuery);
+        $checkStmt->bindParam(':id', $id);
+        $checkStmt->execute();
+        $productCount = $checkStmt->fetchColumn();
+
+        if ($productCount > 0) {
+            // Nếu có sản phẩm, chuyển hướng về trang danh sách với thông báo lỗi
+            header('Location: ?controller=category&action=index&error=' . urlencode('Không thể xóa danh mục này vì có ' . $productCount . ' sản phẩm thuộc danh mục.'));
+            exit();
+        }
+
+        // Nếu không có sản phẩm, tiến hành xóa danh mục
         $query = "DELETE FROM categories WHERE id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
