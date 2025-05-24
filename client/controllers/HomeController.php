@@ -15,7 +15,12 @@ class HomeController {
         $stmt->execute();
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        require_once '../views/home/index.php';
+        // Sử dụng đường dẫn tuyệt đối
+        $viewPath = __DIR__ . '/../views/home/index.php';
+        if (!file_exists($viewPath)) {
+            die("View file not found at: " . $viewPath);
+        }
+        require_once $viewPath;
     }
 }
 ?>

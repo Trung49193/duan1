@@ -33,7 +33,7 @@
         </div>
     </main>
     <footer>
-        <p>&copy; 2025 Cửa hàng điện thoại</p>
+        <p>© 2025 Cửa hàng điện thoại</p>
     </footer>
 </body>
 </html>
