@@ -1,13 +1,15 @@
-<?php 
+<?php
+// commons/env.php
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'pro1014_03');
 
-// Biến môi trường, dùng chung toàn hệ thống
-// Khai báo dưới dạng HẰNG SỐ để không phải dùng $GLOBALS
-
-// define('BASE_URL'   , 'http://localhost/base_du_an_1/');
-
-define('DB_HOST'    , 'localhost');
-define('DB_PORT'    , 3306);
-define('DB_NAME'    , 'pro1014.03');  // Tên database
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
-define('PATH_ROOT'    , __DIR__ . '/../');
+function getDBConnection() {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    return $conn;
+}
+?>
