@@ -1,14 +1,26 @@
 <?php
 session_start();
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-    header('Location: ../client/?controller=user&action=login');
-    exit();
+
+// Debug: Kiểm tra session
+if (!isset($_SESSION['user'])) {
+    echo "Debug: Session user not set.<br>";
+} else {
+    echo "Debug: Session user: " . print_r($_SESSION['user'], true) . "<br>";
+}
+
+// Không chuyển hướng nếu đang ở trang đăng nhập
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'category';
+$action = isset($_GET['action']) ? $_GET['action'] : 'index';
+if ($controller === 'user' && $action === 'login') {
+    // Không làm gì, để UserController xử lý
+} else {
+    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+        header('Location: ?controller=user&action=login');
+        exit();
+    }
 }
 
 require_once '../config/database.php';
-
-$controller = isset($_GET['controller']) ? $_GET['controller'] : 'dashboard';
-$action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
 $controllerFile = "controllers/" . ucfirst($controller) . "Controller.php";
 
