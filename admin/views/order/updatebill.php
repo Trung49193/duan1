@@ -64,5 +64,38 @@ require_once 'layout/navbar.php';
                 </div>
             </div>
 
-            
-            
+            <!-- Status Update -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Cập nhật trạng thái đơn hàng</h6>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="status" class="form-label">Trạng thái</label>
+                            <select class="form-control" id="status" name="status">
+                                <?php foreach ($statusDescriptions as $key => $value): ?>
+                                    <?php if ($key >= $status): // Chỉ hiển thị các trạng thái >= trạng thái hiện tại ?>
+                                        <option value="<?= $key ?>" <?= $key == $status ? 'selected' : '' ?>>
+                                            <?= $value ?>
+                                        </option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                <?php if ($status > 5):?>
+                                    <option value="6">Đã hủy</option>
+                                <?php endif;?>
+                            </select>
+                        </div>
+                        <button type="submit" name="btn_update" class="btn btn-primary mt-3">Cập nhật</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+    <?php
+    require_once 'layout/scripts.php';
+    require_once 'layout/footer.php';
+    ?>
